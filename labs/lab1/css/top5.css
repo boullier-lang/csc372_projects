@@ -1,0 +1,46 @@
+h1
+{
+	font-family: "Georgia";
+}
+
+h2{
+	text-transform: capitalize;
+}
+
+ul
+{
+	font-family: "Helvetica";
+	transition: width 2s;
+}
+
+ul:hover
+{
+		font-size: 20px;
+}
+
+body
+{
+	background-color: black;
+	color: white;
+	
+}
+
+
+img
+{
+	padding: 5px;
+}
+
+.artist
+{
+	border: 1px solid red;
+	max-width:300px;
+}
+
+.spotlight
+{
+	padding: 10px;
+	border: 3px dotted yellow;
+	max-width: 300px;
+	text-align: center;
+}
