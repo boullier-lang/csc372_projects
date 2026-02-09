@@ -1,0 +1,76 @@
+/* SERVICES BOX */
+#services {
+    background: rgba(250,184,122,0.4);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Services list layout */
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.service-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* CATEGORY HEADERS */
+.service-category {
+    margin-bottom: 12px;
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+/* Arrow animation */
+.arrow {
+    transition: transform 0.2s ease;
+}
+
+.arrow.rotated {
+    transform: rotate(90deg);
+}
+
+/* Hidden by default */
+.service-category .service-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+}
+
+/* When opened */
+.service-category .service-list.open {
+    max-height: 500px; /* large enough for content */
+}
+
+
+
+
+/* BOOK BUTTON */
+#book-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #ff9fb7;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#book-btn:hover {
+    background-color: #ff7fa0;
+}
+
+
