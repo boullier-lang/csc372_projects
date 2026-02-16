@@ -1,6 +1,6 @@
 /* SERVICES BOX */
 #services {
-    background: rgba(250,184,122,0.4);
+    background: rgba(215,210,245,0.45);
     padding: 20px;
     border-radius: 10px;
 }
@@ -54,23 +54,15 @@
 }
 
 
+@media (max-width: 768px){
+	 /* Increase padding for services, increase readability */
+    #services {
+        padding: 15px;
+    }
 
+    .service-list li {
+        font-size: 1em;
+    }
 
-/* BOOK BUTTON */
-#book-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1em;
-    font-weight: bold;
-    background-color: #ff9fb7;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
 }
-
-#book-btn:hover {
-    background-color: #ff7fa0;
-}
-
 
