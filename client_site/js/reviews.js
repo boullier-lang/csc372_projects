@@ -34,6 +34,7 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
       const detailsResp = await fetch(detailsUrl);
       const detailsData = await detailsResp.json();
 
+		//Check, do we actually get anything back?
       if (!detailsData || !detailsData.result) {
         document.getElementById("reviews").innerText = "Failed to load details";
         return;
@@ -45,13 +46,13 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
       const container = document.getElementById("reviews");
       container.innerHTML = `<h3>${place.name}</h3>`;
 
+		//If we didn't find anything, then just LEAVE
       if (reviews.length == 0) {
         container.innerHTML += "<p>No reviews found.</p>";
         return;
       }
-	  
-	  
-		// 3) Finally, display our reviews...!
+
+		// 3) Finally, show our reviews...!
       reviews.forEach(r => {
         const div = document.createElement("div");
         div.className = "review";
@@ -73,7 +74,8 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
 function showLocation() {
   const container = document.getElementById("reviews");
 
-//Scawy i know where u are
+//scawy i know where u are
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
