@@ -57,7 +57,6 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
         div.className = "review";
         div.innerHTML = `
           <div class="author">${r.author_name}</div>
-          <div class="rating">${"⭐".repeat(r.rating)}</div>
           <div class="text">${r.text}</div>
         `;
         container.appendChild(div);
