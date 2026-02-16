@@ -49,7 +49,9 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
         container.innerHTML += "<p>No reviews found.</p>";
         return;
       }
-
+	  
+	  
+		// 3) Finally, display our reviews...!
       reviews.forEach(r => {
         const div = document.createElement("div");
         div.className = "review";
@@ -72,6 +74,7 @@ const BUSINESS_NAME = "Golden Mane Salon Rhode Island";
 function showLocation() {
   const container = document.getElementById("reviews");
 
+//Scawy i know where u are
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
