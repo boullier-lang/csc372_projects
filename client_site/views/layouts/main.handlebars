@@ -1,0 +1,27 @@
+<!-- Mathew Boullier -->
+<!-- Created on 2/28/26 -->
+<!-- Handlebars main layout, simple and inherits from what the origina home_page.html was -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+	
+	<!--This is an 'optional' stylesheet loader, adds additional stylesheets if we need them (like services needing services.css)-->
+	{{#if styles}}
+        <link rel="stylesheet" href="/css/{{styles}}">
+    {{/if}}
+</head>
+<body>
+
+	<!-- Use partials for navbar -->
+    {{> navbar}}
+
+    {{{body}}}
+
+</body>
+</html>

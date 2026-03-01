@@ -1,0 +1,37 @@
+<div id="main">
+
+	{{> sidebar}}
+	
+	
+    <div id="right">
+
+        <div id="services">
+            <h2>Services</h2>
+			
+			{{#each services}}
+				<div class="services-category">
+					<div class="category-header">
+						<span> {{category}} </span>
+						<span class="arrow">▶</span>
+					</div>
+					
+					<ul class="service-list open">
+						{{#each items}}
+							<li><span>{{name}}</span> <span> {{price}} </span> </li>
+						{{/each}}
+					</ul>
+				
+				</div>
+			
+			{{/each}}
+           
+
+            <button id="book-btn">BOOK NOW</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/services.js"></script>

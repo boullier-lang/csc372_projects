@@ -1,0 +1,16 @@
+    <div id="left">
+        <h2>Announcements</h2>
+			{{#each announce}}
+				<h3> <strong> {{title}} </strong> - ({{date}}) </h3>
+				<p> {{message}} </p>
+			{{/each}}
+		
+		<hr>
+		
+		<h2> Hours of Operation </h2>
+		<ul>
+            {{#each hours}}
+                <li> {{day}}: {{open}} - {{close}} </li>
+            {{/each}}
+        </ul>
+    </div>

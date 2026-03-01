@@ -1,3 +1,11 @@
+/*
+Mathew Boullier
+
+Date: 2/28/2026
+Changed to fix the closing/opening of the services boxes
+
+*/
+
 /* SERVICES BOX */
 #services {
     background: rgba(215,210,245,0.45);
@@ -10,6 +18,9 @@
     list-style: none;
     padding: 0;
     margin: 0 0 20px 0;
+
+    /* Hidden by default */
+    display: none;
 }
 
 .service-list li {
@@ -41,21 +52,13 @@
     transform: rotate(90deg);
 }
 
-/* Hidden by default */
-.service-category .service-list {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease;
-}
-
 /* When opened */
-.service-category .service-list.open {
-    max-height: 500px; /* large enough for content */
+.service-list.open {
+    display: block; /* Show the list when .open is added */
 }
-
 
 @media (max-width: 768px){
-	 /* Increase padding for services, increase readability */
+    /* Increase padding for services, increase readability */
     #services {
         padding: 15px;
     }
@@ -63,6 +66,4 @@
     .service-list li {
         font-size: 1em;
     }
-
 }
-
