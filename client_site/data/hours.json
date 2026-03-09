@@ -1,0 +1,9 @@
+{
+  "hours": [
+    { "day": "Monday", "open": "9am", "close": "5pm" },
+    { "day": "Tuesday", "open": "9am", "close": "5pm" },
+    { "day": "Wednesday", "open": "9am", "close": "5pm" },
+    { "day": "Thursday", "open": "9am", "close": "5pm" },
+    { "day": "Friday", "open": "9am", "close": "5pm" }
+  ]
+}
