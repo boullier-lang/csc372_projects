@@ -5,7 +5,7 @@
 
 <?php
 
-require_once 'ServiceItem.php';
+require_once __DIR__ . '/ServiceItem.php';
 
 class ServiceCategory {
     private string $category;
