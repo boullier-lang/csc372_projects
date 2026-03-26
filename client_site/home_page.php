@@ -29,7 +29,7 @@
             <img src="resources/img_five.jpg" alt="Hair Style 5">
             <img src="resources/img_six.jpg" alt="Hair Style 6">
         </div>
-        <button id="book-btn">BOOK NOW</button>
+		<a href="booking.php"><button id="book-btn">BOOK NOW</button></a>
     </div>
 </div>
 
