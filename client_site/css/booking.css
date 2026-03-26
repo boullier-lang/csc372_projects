@@ -1,0 +1,129 @@
+.booking-intro {
+	margin-bottom: 1.5rem;
+	color: #666;
+}
+
+.booking-confirm {
+	background: #f0faf4;
+	border: 1px solid #b2dfc4;
+	border-radius: 4px;
+	padding: 0.9rem 1.2rem;
+	margin-bottom: 1.4rem;
+	color: #2d6a4f;
+	font-size: 0.95rem;
+}
+
+.booking-form fieldset {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 1.2rem 1.4rem;
+	margin-bottom: 1.4rem;
+}
+
+.booking-form legend {
+	font-weight: 600;
+	padding: 0 0.5rem;
+	color: #333;
+}
+
+.form-row {
+	display: flex;
+	gap: 1.2rem;
+	margin-bottom: 1rem;
+}
+
+.form-field {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.form-field label {
+	font-size: 0.82rem;
+	font-weight: 600;
+	margin-bottom: 0.3rem;
+	color: #444;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+	padding: 0.55rem 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 0.9rem;
+	font-family: inherit;
+	color: #333;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+	outline: none;
+	border-color: #c8a96e;
+}
+
+.form-field textarea {
+	resize: vertical;
+	min-height: 85px;
+}
+
+.radio-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 0.3rem;
+}
+
+.radio-group label {
+	font-weight: 400;
+	font-size: 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+	cursor: pointer;
+}
+
+
+.btn-book:hover { background: #c8a96e; }
+
+@media (max-width: 600px) {
+	.form-row { flex-direction: column; }
+}
+
+/* ── Multi-service picker ── */
+#service-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.6rem; }
+
+.service-row {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.service-row select {
+	flex: 1;
+	padding: 0.55rem 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 0.9rem;
+	font-family: inherit;
+	color: #333;
+}
+
+.service-row select:focus {
+	outline: none;
+	border-color: #c8a96e;
+}
+
+
+.price-summary {
+	margin-top: 0.75rem;
+	padding: 0.6rem 0.9rem;
+	background: #fdf6ec;
+	border: 1px solid #e8d5b0;
+	border-radius: 4px;
+	font-size: 0.88rem;
+	color: #5a4020;
+}
+.price-summary strong { font-size: 1rem; color: #3a2e28; }
+.price-note { opacity: 0.6; font-size: 0.78rem; margin-left: 0.4rem; }
