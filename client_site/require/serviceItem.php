@@ -1,10 +1,9 @@
+<?php
+/*
 <!--Mathew Boullier-->
 <!--03/08/26-->
 <!--PHP class declaration for ServiceItems. Used in ServiceCategories.-->
-
-
-<?php
-
+*/
 class ServiceItem {
     private string $name;
     private string $price;

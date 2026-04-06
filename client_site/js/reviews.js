@@ -5,6 +5,7 @@
 //Created a simple text-box to hold the API key, so I don't need to worry about keepnig it safe. Additionally, this API requires that it be called from the back-end, from what I can tell.
 //It will give a CORS error no matter what. I wrote this with the intention to get it in a 'workable' state, and it seems that it does work, but fails at the CORS error.
  
+
 let map; // dummy map element for PlacesService
 const BUSINESS_NAME = "Golden Mane Salon Rhode Island"; 
 

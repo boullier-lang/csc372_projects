@@ -1,3 +1,5 @@
+<?php
+/*
 <!-- Mathew Boullier -->
 <!-- 3/8/26 -->
 <!-- services.html replacement -->
@@ -8,7 +10,10 @@
 <!--I find that this makes each file much easier to inspect, debug, etc. It keeps the parts of -->
 <!--Node/Express that I enjoyed working with, but uses PHP instead.-->
 
-<?php
+Updated 4/2/2026
+Now includes the services in a database instead of inside a json. We grab directly from the database.
+*/
+	session_start();
     $pageTitle = 'Golden Mane Salon — Services';
     $pageScript = 'services.js';
 	$pageStyles = ['services.css'];
@@ -19,12 +24,21 @@
 
 <?php
 
-    $json = file_get_contents('data/services.json');
-    $data = json_decode($json, true);
-    $categories = array_map(
-        fn($cat) => new ServiceCategory($cat['category'], $cat['items']),
-        $data['services']
-    );
+$sql  = "SELECT * FROM services";
+$rows = pdo($pdo, $sql)->fetchAll();
+
+// Group rows by category
+$grouped = [];
+foreach ($rows as $row) {
+    $grouped[$row['CATEGORY']][] = $row;
+}
+
+// Now build your categories
+$categories = array_map(
+    fn($cat, $items) => new ServiceCategory($cat, $items),
+    array_keys($grouped),
+    array_values($grouped)
+);
 ?>
 <div id='main'>
 
@@ -40,13 +54,14 @@
 						<?php foreach ($category->getItems() as $item): ?>
 							<li>
 								<span><?= $item->getName() ?></span>
-								<span><?= $item->getPrice() ?></span>
+								<span>$<?= $item->getPrice() ?>+</span>
 							</li>
 						<?php endforeach; ?>
 					</ul>
 				</div>
 			<?php endforeach; ?>
 		</div>
+		<a href="booking.php"><button id="book-btn">BOOK NOW</button></a>
 	</div>
 </div>
 

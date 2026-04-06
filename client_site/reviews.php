@@ -1,3 +1,5 @@
+<?php
+/*
 <!-- Mathew Boullier -->
 <!-- 3/8/26 -->
 <!-- reviews.html replacement -->
@@ -7,27 +9,31 @@
 <!--Node/handlebars, using 'require_once' to serve partial parts of the pages.-->
 <!--I find that this makes each file much easier to inspect, debug, etc. It keeps the parts of -->
 <!--Node/Express that I enjoyed working with, but uses PHP instead.-->
-<?php
+
+Updated 4/4/2026
+Finally was able to build up the courage to fully add in the google API. I'm still terrified of being charged
+1 morbillion dollars. But its okay. It works.
+*/
+	session_start();
     $pageTitle = 'Golden Mane Salon — Reviews';
-    $pageScript = 'reviews.js';
+    $pageStyles = ['reviews.css'];
     require_once 'partials/header.php';
     require_once 'partials/navbar.php';
 ?>
-
-	<div id="main">
-		<div id="left">
-			<h3>Enter Google API Key</h3>
-
-			<input id="apikey" type="text" placeholder="Paste API Key here" size="50">
-		</div>
+<div id="main">
+    <div id="left">
+        <?php require_once "partials/sidebar.php" ?>
+    </div>
+    <div id="right">
+        <h1>Reviews</h1>
+        <div id="reviews">
+            <?php require_once 'partials/reviews_list.php'; ?>
+        </div>
 		
-		<div id="right">
-		<p>This place is under construction, the Google API makes it very difficult to use it without it being from a backend. Also, I don't want to be in debt to the scary company that knows everything about me, so I'm not taking ANY chances!!!</p>
-			<button id="load_reviews">Load Reviews</button>
-			<button id="show_location"> Show Location </button>
-			<div id="reviews"></div>
-		</div>
-		
-	</div>
+			<p> Golden Mane Salon currently has posting new reviews disabled. Therefore, we are unable to post reviews
+		from this page. </p>
+    </div>
+	
 
+</div>
 <?php require_once 'partials/footer.php'; ?>

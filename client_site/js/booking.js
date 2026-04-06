@@ -3,6 +3,7 @@
 //A simple javascript file that works to create additional service rows, and adds up all of the
 //prices to display a projected total.
 
+//Updated 4/4/2026 to include database integration.
 
 const priceMap = {};
 document.querySelectorAll('#service-rows .service-select option').forEach(opt => {

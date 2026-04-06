@@ -1,7 +1,16 @@
+
+<?php 
+/* 
 <!--Mathew Boullier-->
 <!--03/08/26-->
 <!--PHP header partial.-->
 
+Now includes database connection.
+
+*/
+
+    require_once 'require/databaseConnection.php';
+?>
 
 
 <!--Accepts:-->

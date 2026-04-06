@@ -1,3 +1,5 @@
+<?php
+/*
 <!-- Mathew Boullier -->
 <!-- 3/8/26 -->
 <!-- gift-cards.html replacement -->
@@ -8,7 +10,9 @@
 <!--I find that this makes each file much easier to inspect, debug, etc. It keeps the parts of -->
 <!--Node/Express that I enjoyed working with, but uses PHP instead.-->
 
-<?php
+*/
+
+	session_start();
     $pageTitle = 'Golden Mane Salon — Gift-Cards';
     require_once 'partials/header.php';
     require_once 'partials/navbar.php';

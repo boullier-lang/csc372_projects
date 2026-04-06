@@ -1,10 +1,11 @@
+<?php
+/*
 <!--Mathew Boullier-->
 <!--03/08/26-->
 <!--PHP class declaration for service categories; this contains logic to get the category, items, etc.-->
 <!--Requires class 'ServiceItem' to use.-->
 
-<?php
-
+*/
 require_once __DIR__ . '/serviceItem.php';
 
 class ServiceCategory {
@@ -14,7 +15,7 @@ class ServiceCategory {
     public function __construct(string $category, array $items) {
         $this->category = $category;
         $this->items    = array_map(
-            fn($item) => new ServiceItem($item['name'], $item['price']),
+            fn($item) => new ServiceItem($item['NAME'], number_format($item['PRICE'],2)),
             $items
         );
     }

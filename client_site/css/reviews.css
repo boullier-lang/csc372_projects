@@ -1,0 +1,21 @@
+.review-card {
+    background: rgba(215,210,245,0.45);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+}
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.review-rating {
+    color: #c8a96e;
+    font-size: 1.1rem;
+}
+.review-date {
+    color: #888;
+    font-size: 0.85rem;
+    margin-left: auto;
+}
