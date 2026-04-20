@@ -1,5 +1,5 @@
 import ReviewCard from '../components/ReviewCard'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../components/sideBar'
 import './reviews.css'
 
 const fakeReviews = [

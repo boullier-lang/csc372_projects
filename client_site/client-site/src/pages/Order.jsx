@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import servicesData from '../assets/services.json'
 import OrderForm from '../components/OrderForm'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../components/sideBar'
 
 import './order.css'
 

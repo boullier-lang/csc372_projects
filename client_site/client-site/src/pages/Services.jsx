@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import servicesData from '../assets/services.json'
 import ServiceCategory from '../components/ServiceCategory'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../components/sideBar'
 import './services.css'
 import { Link } from 'react-router-dom'
 
