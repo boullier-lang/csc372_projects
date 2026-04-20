@@ -1,0 +1,55 @@
+/* ORDER FORM */
+#order-form {
+    background: rgba(215,210,245,0.45);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#order-form h2 {
+    margin-bottom: 20px;
+}
+
+#order-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+#order-form input,
+#order-form select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background: white;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+#order-form button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* CONFIRMATION */
+#confirmation {
+    text-align: center;
+    padding: 20px;
+}
+
+#confirmation h2 {
+    margin-bottom: 12px;
+}
+
+#confirmation p {
+    margin: 6px 0;
+}
+
+@media (max-width: 768px) {
+    #order-form {
+        padding: 15px;
+    }
+}
