@@ -26,6 +26,29 @@
 	color: #333;
 }
 
+.field-error {
+    color: #c0392b;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.booking-error {
+    color: #c0392b;
+    font-size: 14px;
+    margin-bottom: 16px;
+    line-height: 2;
+}
+
+.booking-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.booking-error li {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
 .form-row {
 	display: flex;
 	gap: 1.2rem;
@@ -43,6 +66,23 @@
 	font-weight: 600;
 	margin-bottom: 0.3rem;
 	color: #444;
+}
+
+#date-error, #slot-error {
+    color: #c0392b;
+    display: none;
+    margin-top: 6px;
+}
+
+#time-slot-section {
+    display: none;
+}
+
+#time-slots-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .form-field input,

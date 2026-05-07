@@ -28,7 +28,7 @@ $orders = pdo($pdo,
         <div class="order-card">
             <div class="order-header">
                 <span>Order #<?= $order['ORDER_ID'] ?></span>
-                <span><?= date('M j, Y', strtotime($order['CREATED_AT'])) ?></span>
+                <span><?= date('M j, Y \a\t g:i A', strtotime($order['appt_date'])) ?></span>
                 <span class="order-status"><?= ucfirst($order['ORDER_STATUS']) ?></span>
             </div>
 

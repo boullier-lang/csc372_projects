@@ -4,7 +4,7 @@
 //prices to display a projected total.
 
 //Updated 4/4/2026 to include database integration.
-
+//Updated 5/6/2026 to include better date selection
 const priceMap = {};
 document.querySelectorAll('#service-rows .service-select option').forEach(opt => {
     if (opt.value) {
@@ -77,3 +77,96 @@ document.getElementById('phone').addEventListener('input', function (e) {
 
     this.value = formatted;
 });
+
+
+//Calendar
+function checkDate() {
+    var dateInput  = document.getElementById('appt_date_pick');
+    var dateError  = document.getElementById('date-error');
+    var timeSection = document.getElementById('time-slot-section');
+    var slotsGrid  = document.getElementById('time-slots-grid');
+    var checkBtn   = document.getElementById('check-date-btn');
+ 
+    // Reset
+    dateError.style.display  = 'none';
+    timeSection.style.display = 'none';
+    slotsGrid.innerHTML = '';
+    document.getElementById('appt_date_hidden').value = '';
+    document.getElementById('appt_time_hidden').value  = '';
+ 
+    var dateVal = dateInput.value;
+    if (!dateVal) {
+        dateError.textContent  = 'Please select a date first.';
+        dateError.style.display = 'block';
+        return;
+    }
+ 
+    checkBtn.disabled    = true;
+    checkBtn.textContent = 'Checking…';
+ 
+    fetch('check_availability.php?date=' + encodeURIComponent(dateVal))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            checkBtn.disabled    = false;
+            checkBtn.textContent = 'Check Availability';
+ 
+            if (!data.open) {
+                dateError.textContent  = data.message || 'Sorry, we are closed on that day.';
+                dateError.style.display = 'block';
+                return;
+            }
+ 
+            if (!data.slots || data.slots.length === 0) {
+                dateError.textContent  = 'No available time slots on that day — please try another date.';
+                dateError.style.display = 'block';
+                return;
+            }
+ 
+            // Render one button per available slot
+            data.slots.forEach(function(slot) {
+                var slotBtn = document.createElement('button');
+                slotBtn.type      = 'button';
+                slotBtn.textContent = slot;
+                slotBtn.className = 'time-slot-btn';
+                slotBtn.onclick   = function() {
+                    document.querySelectorAll('.time-slot-btn').forEach(function(b) {
+                        b.classList.remove('selected');
+                    });
+                    slotBtn.classList.add('selected');
+                    document.getElementById('appt_date_hidden').value = dateVal;
+                    document.getElementById('appt_time_hidden').value  = slot;
+                    document.getElementById('slot-error').style.display = 'none';
+                };
+                slotsGrid.appendChild(slotBtn);
+            });
+ 
+            timeSection.style.display = 'block';
+        })
+        .catch(function() {
+            checkBtn.disabled    = false;
+            checkBtn.textContent = 'Check Availability';
+            dateError.textContent  = 'Something went wrong. Please try again.';
+            dateError.style.display = 'block';
+        });
+}
+ 
+// Prevent submit if no slot selected
+document.getElementById('booking-form').addEventListener('submit', function(e) {
+    var timeHidden  = document.getElementById('appt_time_hidden');
+    var slotError   = document.getElementById('slot-error');
+    var timeSection = document.getElementById('time-slot-section');
+    var dateError   = document.getElementById('date-error');
+ 
+    if (!timeHidden.value) {
+        e.preventDefault();
+        if (timeSection.style.display !== 'none') {
+            slotError.textContent  = 'Please select a time slot before submitting.';
+            slotError.style.display = 'block';
+        } else {
+            dateError.textContent  = 'Please select and confirm a date first.';
+            dateError.style.display = 'block';
+        }
+    }
+});
+
+document.getElementById('check-date-btn').addEventListener('click', checkDate);

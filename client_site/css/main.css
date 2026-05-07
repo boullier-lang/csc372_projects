@@ -20,6 +20,10 @@ body {
     font-size: 0.95rem;
     line-height: 1.6;
 }
+/* Because im a little lazy, give everything text shadows from here */
+p, h1, h2, h3, h4, ul, ol, li, label, span {
+    text-shadow: 0 0 8px rgba(255, 255, 250, 1);
+}
 
 /* General headings */
 h1, h2, h3, h4 {

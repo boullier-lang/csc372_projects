@@ -7,17 +7,19 @@
 Updated 4/4/2026
 No longer requires name and email, and phone number is optional. Uses information from the user logged in and stores that.
 Also now pushes orders to the database.
-*/	
 
-	session_start();
+Updated 5/6/2026
+Now has better date selection, and two hour long appointment windows. Saves the date to the database as well.
+*/	
+    session_start();
     $pageTitle  = 'Golden Mane Salon — Booking';
     $pageScript = 'booking.js';
     $pageStyles = ['fields.css'];
     require_once 'partials/header.php';
     require_once 'partials/navbar.php';
-	
-	if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php?redirect=booking.php');
+
+    if (!isset($_SESSION['user_id'])) {
+        echo "<meta http-equiv='refresh' content='0;url=login.php'>";
         exit;
     }
     $user = pdo($pdo, "SELECT NAME, EMAIL FROM accounts WHERE USER_ID = ?", [$_SESSION['user_id']])->fetch();
@@ -28,59 +30,82 @@ Also now pushes orders to the database.
 
     $confirmation = "";
 
-	if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['appt_date'])) {
-		$name      = $user_name;
-		$email     = $user_email;
-		$phone     = htmlspecialchars(trim($_GET['phone'] ?? ''));
-		$appt_date = htmlspecialchars(trim($_GET['appt_date']));
-		$notes     = htmlspecialchars(trim($_GET['notes']));
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['appt_date'])) {
 
-		if (!empty($phone)) {
-			setcookie('booking_phone', $phone, time() + 60 * 60 * 24 * 365, '/');
-			$saved_phone = $phone;
-		}
+    $errors = [];
 
-		$time_pref    = htmlspecialchars($_GET['time_pref'] ?? 'No preference');
-		$services_raw = $_GET['services'] ?? [];
+    $services_raw = $_GET['services'] ?? [];
+    $services_raw = array_filter($services_raw, fn($s) => $s !== '');
 
-		// Look up each selected service by name to get its ID and price
-		$service_items = [];
-		$total = 0;
+    if (empty($services_raw)) {
+        $errors[] = 'Please select at least one service.';
+    }
 
-		foreach ($services_raw as $service_name) {
-			$svc = pdo($pdo, "SELECT SERVICE_ID, NAME, PRICE FROM services WHERE NAME = ?", [htmlspecialchars($service_name)])->fetch();
-			if ($svc) {
-				$service_items[] = $svc;
-				$total += $svc['PRICE'];
-			}
-		}
+    if (empty(trim($_GET['appt_date'] ?? ''))) {
+        $errors[] = 'Please select a date.';
+    }
 
-		$service_list = !empty($service_items)
-			? implode(', ', array_column($service_items, 'NAME'))
-			: 'Not specified';
+    if (empty(trim($_GET['appt_time'] ?? ''))) {
+        $errors[] = 'Please select a time slot.';
+    }
 
-		if (!empty($service_items)) {
-			// Step 1: Insert the order
-			pdo($pdo, "INSERT INTO orders (USER_ID, ORDER_STATUS, TOTAL) VALUES (?, 'pending', ?)",
-				[$_SESSION['user_id'], $total]);
+    if (!empty($errors)) {
+		//Joins all errors together with <br> (using implode), then displays them on the screen.
+		$confirmation = "<div class='booking-error'>"
+			. implode('<br>', array_map(fn($e) => "<span>{$e}</span>", $errors))
+			. "</div>";
+    } else {
+        $name      = $user_name;
+        $email     = $user_email;
+        $phone     = htmlspecialchars(trim($_GET['phone'] ?? ''));
+        $appt_date = htmlspecialchars(trim($_GET['appt_date']));
+        $appt_time = htmlspecialchars(trim($_GET['appt_time']));
+        $notes     = htmlspecialchars(trim($_GET['notes'] ?? ''));
 
-			$order_id = $pdo->lastInsertId();
+        $appt_datetime = date('Y-m-d H:i:s', strtotime("$appt_date $appt_time"));
 
-			// Step 2: Insert each order item
-			foreach ($service_items as $svc) {
-				pdo($pdo, "INSERT INTO order_items (ORDER_ID, SERVICE_ID, PRICE_CHARGED) VALUES (?, ?, ?)",
-					[$order_id, $svc['SERVICE_ID'], $svc['PRICE']]);
-			}
-		}
+        if (!empty($phone)) {
+            setcookie('booking_phone', $phone, time() + 60 * 60 * 24 * 365, '/');
+            $saved_phone = $phone;
+        }
 
-		$confirmation = "
-			<div class='booking-confirm'>
-				✓ Thank you, <strong>{$name}</strong>!
-				Your request for <strong>{$service_list}</strong> on
-				<strong>{$appt_date}</strong> ({$time_pref}) has been received.
-				We'll follow up at {$email} within 24 hours.
-			</div>";
-	}
+        $service_items = [];
+        $total = 0;
+
+        foreach ($services_raw as $service_name) {
+            $svc = pdo($pdo, "SELECT SERVICE_ID, NAME, PRICE FROM services WHERE NAME = ?", [htmlspecialchars($service_name)])->fetch();
+            if ($svc) {
+                $service_items[] = $svc;
+                $total += $svc['PRICE'];
+            }
+        }
+
+        $service_list = !empty($service_items)
+            ? implode(', ', array_column($service_items, 'NAME'))
+            : 'Not specified';
+
+        pdo($pdo, "INSERT INTO orders (USER_ID, ORDER_STATUS, TOTAL, APPT_DATE) VALUES (?, 'pending', ?, ?)",
+            [$_SESSION['user_id'], $total, $appt_datetime]);
+
+        $order_id = $pdo->lastInsertId();
+
+        foreach ($service_items as $svc) {
+            pdo($pdo, "INSERT INTO order_items (ORDER_ID, SERVICE_ID, PRICE_CHARGED) VALUES (?, ?, ?)",
+                [$order_id, $svc['SERVICE_ID'], $svc['PRICE']]);
+        }
+		
+		//Makes the date more user friendly to look at
+        $display_dt = date('l, F j, Y \a\t g:i A', strtotime($appt_datetime));
+
+        $confirmation = "
+            <div class='booking-confirm'>
+                ✓ Thank you, <strong>{$name}</strong>!
+                Your request for <strong>{$service_list}</strong> on
+                <strong>{$display_dt}</strong> has been received.
+                We'll follow up at {$email} within 24 hours.
+            </div>";
+    }
+}
 
     $allServices = pdo($pdo, "SELECT * FROM services")->fetchAll();
 ?>
@@ -94,7 +119,7 @@ Also now pushes orders to the database.
 
         <?php echo $confirmation; ?>
 
-        <form action="booking.php" method="GET" class="booking-form">
+        <form action="booking.php" method="GET" class="booking-form" id="booking-form">
 
             <fieldset>
                 <legend>Your Details</legend>
@@ -112,13 +137,6 @@ Also now pushes orders to the database.
             <fieldset>
                 <legend>Appointment Details</legend>
 
-                <div class="form-row">
-                    <div class="form-field">
-                        <label for="appt_date">Preferred Date</label>
-                        <input type="date" id="appt_date" name="appt_date" required>
-                    </div>
-                </div>
-
                 <div class="form-field">
                     <label>Services</label>
                     <div id="service-rows">
@@ -135,7 +153,6 @@ Also now pushes orders to the database.
                             <button type="button" class="booking-row-dismiss" onclick="removeServiceRow(this)" style="display:none">✕</button>
                         </div>
                     </div>
-
                     <button type="button" onclick="addServiceRow()">+ Add another service</button>
 
                     <div id="price-summary" style="display:none" class="price-summary">
@@ -144,29 +161,43 @@ Also now pushes orders to the database.
                     </div>
                 </div>
 
+                <!-- Step 1: Date picker -->
                 <div class="form-field">
-                    <label>Preferred Time of Day</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="time_pref" value="Morning"> Morning</label>
-                        <label><input type="radio" name="time_pref" value="Midday"> Midday</label>
-                        <label><input type="radio" name="time_pref" value="Afternoon"> Afternoon</label>
-                        <label><input type="radio" name="time_pref" value="No preference" checked> No Preference</label>
+                    <label for="appt_date_pick">Select a Date</label>
+                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                        <input type="date" id="appt_date_pick"
+                               min="<?= date('Y-m-d', strtotime('+1 day')) ?>"
+                               style="max-width: 220px;">
+                        <button type="button" id="check-date-btn">Check Availability</button>
                     </div>
+                    <p id="date-error"></p>
+                </div>
+
+                <!-- Step 2: Time slots, revealed after a valid date is confirmed -->
+                <div class="form-field" id="time-slot-section" style="display:none;">
+                    <label>Available Time Slots</label>
+                    <div id="time-slots-grid"></div>
+                    <input type="hidden" name="appt_date" id="appt_date_hidden">
+                    <input type="hidden" name="appt_time"  id="appt_time_hidden">
+                    <p id="slot-error"></p>
                 </div>
 
                 <div class="form-field">
                     <label for="notes">Additional Notes</label>
-                    <textarea id="notes" name="notes" placeholder="Allergies, hair history, special requests…"></textarea>
+                    <textarea id="notes" name="notes"
+                        placeholder="Allergies, hair history, special requests…"></textarea>
                 </div>
             </fieldset>
 
             <button type="submit">Request Appointment</button>
-			
-			<p> <strong> Notice: </strong> I accept cash, card, and apple pay during appointments, but a debit card must be on file
-				to hold your appointment. </p>
+
+            <p><strong>Notice:</strong> I accept cash, card, and Apple Pay during appointments, but a debit card must be on file
+                to hold your appointment.</p>
 
         </form>
     </div>
 </div>
+
+
 
 <?php require_once 'partials/footer.php'; ?>
